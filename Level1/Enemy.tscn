@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Tilemap/tilemap.png" type="Texture" id=1]
+[ext_resource path="res://Level1/Enemy.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10.4653, 17.7849 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 7.75, 4 )
+
+[node name="Enemy" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 3, -0.888889 )
+scale = Vector2( 1.42857, 1.22222 )
+texture = ExtResource( 1 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 103, 92, 14, 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 2.5, 0.5 )
+scale = Vector2( 0.621098, -0.196796 )
+shape = SubResource( 1 )
+
+[node name="right" type="RayCast2D" parent="."]
+position = Vector2( 11, -2 )
+enabled = true
+cast_to = Vector2( 0, 21 )
+
+[node name="left" type="RayCast2D" parent="."]
+position = Vector2( -6, -2 )
+enabled = true
+cast_to = Vector2( 0, 20 )
+
+[node name="Died" type="Area2D" parent="."]
+position = Vector2( 2, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Died"]
+position = Vector2( 0.25, -1 )
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="Died" to="." method="_on_Died_body_entered"]
